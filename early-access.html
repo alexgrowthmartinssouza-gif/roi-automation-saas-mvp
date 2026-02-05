@@ -319,37 +319,44 @@
 
     $('#early-access-form').on('submit', function(e) {
         e.preventDefault();
-
-        if (waitlistCount >= 10) {
-            alert('❌ Desculpe, as vagas foram preenchidas. Fique na fila de espera.');
-            return;
-        }
+        
+        $('#submit-btn').prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Processando...');
 
         const formData = {
             name: $('#name').val(),
             email: $('#email').val(),
             company: $('#company').val(),
             phone: $('#phone').val(),
-            challenge: $('#challenge').val(),
-            timestamp: new Date().toISOString(),
-            position: waitlistCount + 1
+            challenge: $('#challenge').val()
         };
 
-        // Simula envio pro backend
-        console.log('📝 Enviando inscrição:', formData);
-
-        // Atualiza contagem
-        waitlistCount++;
-        localStorage.setItem('roi_waitlist_count', waitlistCount);
-
-        // Mostra sucesso
-        $('#form-container').hide();
-        $('#confirmed-email').text(formData.email);
-        $('#final-position').text(formData.position);
-        $('#success-container').show();
-
-        // Em produção, isso enviaria pra um backend
-        // fetch('/api/early-access', { method: 'POST', body: JSON.stringify(formData) })
+        // Envia pro backend
+        fetch('/api/early-access', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                // Mostra sucesso
+                $('#form-container').hide();
+                $('#confirmed-email').text(formData.email);
+                $('#final-position').text(data.position);
+                $('#success-container').show();
+                
+                // Atualiza UI
+                updateSpots();
+            } else {
+                alert('❌ ' + (data.error || 'Erro ao salvar inscrição'));
+                $('#submit-btn').prop('disabled', false).html('<i class="fas fa-check"></i> Reservar Minha Vaga');
+            }
+        })
+        .catch(err => {
+            console.error('Erro:', err);
+            alert('❌ Erro na conexão. Tente novamente.');
+            $('#submit-btn').prop('disabled', false).html('<i class="fas fa-check"></i> Reservar Minha Vaga');
+        });
     });
 
     // Inicializa
