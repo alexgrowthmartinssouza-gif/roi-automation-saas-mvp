@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROI Automation - SaaS de Automação com IA</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00AA00;
+            --secondary: #1a1a2e;
+            --light: #f8f9fa;
+            --dark: #0d0d1f;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary) !important;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary) 0%, #00ff00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            border: none;
+            padding: 12px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #00cc00;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 170, 0, 0.3);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 20px;
+            background: #f8f9fa;
+        }
+
+        .feature-card {
+            padding: 30px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            text-align: center;
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 170, 0, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 80px 20px;
+            background: white;
+        }
+
+        .pricing h2 {
+            text-align: center;
+            margin-bottom: 60px;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--secondary);
+        }
+
+        .pricing-card {
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .pricing-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 15px 40px rgba(0, 170, 0, 0.15);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(0, 170, 0, 0.05) 0%, rgba(0, 255, 0, 0.05) 100%);
+            transform: scale(1.05);
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 20px 0;
+        }
+
+        .price-period {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 30px 0;
+            text-align: left;
+        }
+
+        .features-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            color: #666;
+        }
+
+        .features-list li:before {
+            content: "✓ ";
+            color: var(--primary);
+            font-weight: 700;
+            margin-right: 10px;
+        }
+
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container-lg">
+        <a class="navbar-brand" href="#">🚀 ROI Automation</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                <li class="nav-item"><a class="nav-link" href="#pricing">Preços</a></li>
+                <li class="nav-item"><a class="nav-link btn btn-primary text-white ms-3" href="#contact">Começar</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container-lg">
+        <h1>Automação de Tarefas com IA</h1>
+        <p>Reduza tempo operacional em 80% com automação inteligente. Seus processos, mais rápidos.</p>
+        <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#demoModal">
+            <i class="fas fa-play"></i> Assistir Demo (2min)
+        </button>
+        <button class="btn btn-outline-light btn-lg ms-3" href="#pricing">
+            <i class="fas fa-check"></i> Ver Planos
+        </button>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features" id="features">
+    <div class="container-lg">
+        <h2 class="text-center mb-5 fw-bold" style="font-size: 2.5rem; color: var(--secondary);">O que você consegue</h2>
+        <div class="row g-4">
+            <div class="col-md-4 animate-fade">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-robot"></i></div>
+                    <h3>Automação 24/7</h3>
+                    <p>Tarefas rodando sem parar. Enquanto você dorme, o sistema trabalha.</p>
+                </div>
+            </div>
+            <div class="col-md-4 animate-fade">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-brain"></i></div>
+                    <h3>Inteligência Artificial</h3>
+                    <p>Aprende com seus padrões. Melhora a cada execução.</p>
+                </div>
+            </div>
+            <div class="col-md-4 animate-fade">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>ROI Garantido</h3>
+                    <p>Economize em tempo e operações. Pague apenas pelo que usar.</p>
+                </div>
+            </div>
+            <div class="col-md-4 animate-fade">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-code"></i></div>
+                    <h3>API Simples</h3>
+                    <p>Integre em 5 minutos. Documentação completa incluída.</p>
+                </div>
+            </div>
+            <div class="col-md-4 animate-fade">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-lock"></i></div>
+                    <h3>Segurança Total</h3>
+                    <p>Seus dados encriptados. Conformidade LGPD/GDPR.</p>
+                </div>
+            </div>
+            <div class="col-md-4 animate-fade">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-headset"></i></div>
+                    <h3>Suporte 24/7</h3>
+                    <p>Time sempre pronto. Resposta em menos de 1 hora.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing Section -->
+<section class="pricing" id="pricing">
+    <div class="container-lg">
+        <h2>Planos Simples e Diretos</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="pricing-card">
+                    <h3>Starter</h3>
+                    <div class="price">R$ 99<span class="price-period">/mês</span></div>
+                    <p>Perfeito para começar</p>
+                    <ul class="features-list">
+                        <li>Até 100 automações/mês</li>
+                        <li>1 usuário</li>
+                        <li>Email support</li>
+                        <li>API básica</li>
+                    </ul>
+                    <button class="btn btn-outline-primary w-100">Escolher</button>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="pricing-card featured">
+                    <div style="background: var(--primary); color: white; padding: 5px 15px; display: inline-block; border-radius: 20px; margin-bottom: 15px; font-size: 0.9rem; font-weight: 700;">MAIS POPULAR</div>
+                    <h3>Professional</h3>
+                    <div class="price">R$ 299<span class="price-period">/mês</span></div>
+                    <p>Para equipes em crescimento</p>
+                    <ul class="features-list">
+                        <li>Automações ilimitadas</li>
+                        <li>Até 5 usuários</li>
+                        <li>Suporte prioritário</li>
+                        <li>API completa</li>
+                        <li>Webhooks</li>
+                    </ul>
+                    <button class="btn btn-primary w-100">Começar Agora</button>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="pricing-card">
+                    <h3>Enterprise</h3>
+                    <div class="price">Custom<span class="price-period">/mês</span></div>
+                    <p>Solução sob medida</p>
+                    <ul class="features-list">
+                        <li>Tudo no Professional</li>
+                        <li>Usuários ilimitados</li>
+                        <li>SLA 99.9%</li>
+                        <li>Suporte dedicado</li>
+                        <li>Integrações customizadas</li>
+                    </ul>
+                    <button class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#contactModal">Fale Conosco</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta" id="contact">
+    <div class="container-lg">
+        <h2>Pronto para aumentar seu ROI?</h2>
+        <p class="mb-4" style="font-size: 1.2rem; opacity: 0.9;">Começe grátis. Sem cartão de crédito obrigatório.</p>
+        <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#signupModal">
+            Criar Conta Grátis
+        </button>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container-lg">
+        <p>&copy; 2026 ROI Automation. Todos os direitos reservados.</p>
+        <div class="mt-3">
+            <a href="#">Twitter</a> | 
+            <a href="#">LinkedIn</a> | 
+            <a href="#">GitHub</a> |
+            <a href="#">Contato</a>
+        </div>
+    </div>
+</footer>
+
+<!-- Modals -->
+<div class="modal fade" id="demoModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Demo - ROI Automation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="ratio ratio-16x9">
+                    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="contactModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Plano Enterprise</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Nome</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Empresa</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Enviar Requisição</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="signupModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Começar Gratuitamente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Nome Completo</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Senha</label>
+                        <input type="password" class="form-control" required>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="terms" required>
+                        <label class="form-check-label" for="terms">
+                            Concordo com os <a href="#">Termos de Uso</a>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Criar Conta</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Smooth scroll
+        $('a[href^="#"]').on('click', function(e) {
+            e.preventDefault();
+            var target = $(this.getAttribute('href'));
+            if(target.length) {
+                $('html, body').stop().animate({
+                    scrollTop: target.offset().top - 80
+                }, 1000);
+            }
+        });
+
+        // Animate on scroll
+        $(window).on('scroll', function() {
+            $('.animate-fade').each(function() {
+                if($(this).offset().top < $(window).scrollTop() + $(window).height()) {
+                    $(this).addClass('animate-fade');
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
