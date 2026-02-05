@@ -210,6 +210,10 @@ runAutomation().catch(console.error);
   async deliverSolution(inscription, automation, analysis) {
     console.log(`📤 Entregando solução para ${inscription.email}...`);
 
+    // Notifica via Telegram (para você acompanhar)
+    await this.notifyTelegram(inscription, automation, analysis);
+
+    // Email para o cliente (simulado)
     const emailBody = `
 Olá ${inscription.name},
 
@@ -237,13 +241,55 @@ Próximos passos:
 ROI Automation Team 🚀
     `;
 
-    // Aqui integraria com email/Telegram
-    console.log('✉️ Email de entrega pronto (não enviado, apenas teste)');
-    console.log('---');
-    console.log(emailBody);
-    console.log('---');
+    console.log('✉️ Email de entrega pronto (client)');
+    return { sent: true, method: 'telegram' };
+  }
 
-    return { sent: true, method: 'email' };
+  /**
+   * Notifica você no Telegram sobre cada entrega
+   */
+  async notifyTelegram(inscription, automation, analysis) {
+    const message = `
+<b>✅ AUTOMAÇÃO ENTREGUE</b>
+
+<b>Cliente:</b> ${inscription.name}
+<b>Email:</b> ${inscription.email}
+<b>Empresa:</b> ${inscription.company}
+
+<b>📊 SOLUÇÃO:</b>
+Type: <code>${analysis.type}</code>
+Prioridade: ${analysis.priority}/5
+Esforço: ${analysis.effort}
+ROI: ${analysis.estimated_roi}
+
+<b>🎯 Automação ID:</b> <code>${automation.id}</code>
+
+<b>📝 Desafio:</b>
+<pre>${inscription.challenge.substring(0, 150)}...</pre>
+
+<b>Próximo passo:</b> Aguardando feedback em 24h
+    `.trim();
+
+    // Salva em arquivo pra ser enviado pelo cron
+    const notifyPath = '/root/.openclaw/workspace/.state/telegram-notify-queue.jsonl';
+    const notification = {
+      timestamp: new Date().toISOString(),
+      type: 'delivery',
+      message: message,
+      sent: false
+    };
+
+    try {
+      let queue = [];
+      if (fs.existsSync(notifyPath)) {
+        queue = fs.readFileSync(notifyPath, 'utf8').split('\n').filter(l => l).map(l => JSON.parse(l));
+      }
+      queue.push(notification);
+      fs.writeFileSync(notifyPath, queue.map(q => JSON.stringify(q)).join('\n'));
+      console.log('🔔 Notificação Telegram enfileirada');
+    } catch (e) {
+      console.error('⚠️ Erro ao enfileirar notificação:', e.message);
+    }
   }
 
   /**
